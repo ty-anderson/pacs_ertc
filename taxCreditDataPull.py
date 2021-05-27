@@ -43,27 +43,11 @@ def copyIntoExcelTemplate():
         ws.range("A2:PX15001").value = payroll_data
         main_ws = temp_wb.sheets['CAREs Act Data Payroll Template']
         main_ws.range('A2:AY2').api.AutoFill(main_ws.range("A2:AY" + str(idx + 1)).api, AutoFillType.xlFillDefault)
-        filename = filename.upper()
         new_name = r"C:\Users\tyler.anderson\Documents\Finance\210525 - 2021 Q1 ERTC\FINISHED TEMPLATES" + "\\Payroll " + daterange[0] + " (" + str(counter) + ").xlsx"
         temp_wb.save(new_name)
         xw.apps.active.quit()
         counter += 1
         print(counter)
-
-
-def getFileList():
-    """Walks through all files in the path and makes a list of them"""
-    folder = r"C:\Users\tyler.anderson\Desktop\2020 Payroll\Semi-Monthly"
-    file_list = []
-    counter = 0
-    for dirpath, dirnames, filenames in os.walk(folder):
-        for filename in [f for f in filenames if f.endswith(".xlsx")]:
-            file = os.path.join(dirpath, filename)
-            if 'Payroll Allocation' in file:
-                file_list.append(file)
-                print(file)
-                counter += 1
-    print(counter)
 
 
 if __name__ == '__main__':

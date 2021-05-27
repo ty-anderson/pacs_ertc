@@ -34,7 +34,7 @@ def copyIntoExcelTemplate():
         df = df[1:]
         df.columns = new_header
         client_names = df["Client ID"].to_list()
-        for idx, val in enumerate(client_names):
+        for idx, val in enumerate(client_names):  # GET LAST ROW NUMBER TO AUTOFILL TO
             if val is None:
                 break
         temp_wb = xw.Book(r"C:\Users\tyler.anderson\Documents\Finance\210525 - 2021 Q1 ERTC\210311 PACS Template.xlsx", update_links=True, read_only=False)

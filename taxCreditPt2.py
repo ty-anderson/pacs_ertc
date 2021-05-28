@@ -6,6 +6,10 @@ import pandas as pd
 
 # ADD A TEST COMMENT and then add a little more
 
+# lets write a function right here as a test
+def testFunction(yourname):
+    print(yourname + " is a dingus")
+
 # CREATE REFERENCE LIST OF WHICH BUILDINGS ARE SM OR BW
 payroll_lookup = pd.read_excel(r"P:\PACS\Finance\General Info\Finance Misc\Facility List.xlsx", sheet_name="PR Ref", usecols=["ID", "Schedule"])
 print(payroll_lookup)

@@ -4,7 +4,7 @@ import pandas as pd
 
 """PR TAX CREDIT PT2.  PULL PAYROLL REPORT FROM FILE CREATED FROM PT1, REMOVE SM OR BW FACILITIES BASED ON ID # AND SAVE"""
 
-# ADD A TEST COMMENT
+# ADD A TEST COMMENT and then add a little more
 
 # CREATE REFERENCE LIST OF WHICH BUILDINGS ARE SM OR BW
 payroll_lookup = pd.read_excel(r"P:\PACS\Finance\General Info\Finance Misc\Facility List.xlsx", sheet_name="PR Ref", usecols=["ID", "Schedule"])

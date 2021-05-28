@@ -1,7 +1,10 @@
 import os
 import xlwings as xw
 import pandas as pd
+import git
 
+repo = git.Repo(os.getcwd())
+repo.remotes.origin.pull()
 """PR TAX CREDIT PT2.  PULL PAYROLL REPORT FROM FILE CREATED FROM PT1, REMOVE SM OR BW FACILITIES BASED ON ID # AND SAVE"""
 
 # CREATE REFERENCE LIST OF WHICH BUILDINGS ARE SM OR BW
@@ -63,4 +66,5 @@ def getFileList():
 
 
 if __name__ == '__main__':
-    getFileList()
+    # getFileList()
+    print("Done")

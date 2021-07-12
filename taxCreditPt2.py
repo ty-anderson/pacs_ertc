@@ -1,74 +1,27 @@
 import os
 import xlwings as xw
 import pandas as pd
-import git
-
-repo = git.Repo(os.getcwd())
-repo.remotes.origin.pull()
-"""PR TAX CREDIT PT2.  PULL PAYROLL REPORT FROM FILE CREATED FROM PT1, REMOVE SM OR BW FACILITIES BASED ON ID # AND SAVE"""
-
-# ADD A TEST COMMENT and then add a little more
-
-# lets write a function right here as a test
-def testFunction(yourname):
-    print(yourname + " is a dingus")
-
-# CREATE REFERENCE LIST OF WHICH BUILDINGS ARE SM OR BW
-# payroll_lookup = pd.read_excel(r"P:\PACS\Finance\General Info\Finance Misc\Facility List.xlsx", sheet_name="PR Ref", usecols=["ID", "Schedule"])
-# print(payroll_lookup)
-# count = 0
-# for i in payroll_lookup['Schedule']:
-#     if i == 'Semi-Monthly':
-#         payroll_lookup = payroll_lookup.drop(index=count)
-#     count += 1
-# sm_list = payroll_lookup["ID"].to_list()
+import glob
 
 
-# def getExcelDataBW(file_list, counter):
-#     """Will pull name and net income from budget files and write to csv file on desktop"""
-#     for file in file_list:
-#         filepath, filename = os.path.split(file)
-#         filename = filename[:14] + "payroll allocation report"
-#         wb = xw.Book(file, update_links=False, read_only=True)
-#         payroll_sht = wb.sheets[0]
-#         payroll_data = payroll_sht.range('A1:PX15000').value
-#         df = pd.DataFrame(payroll_data)
-#         new_header = df.iloc[0]
-#         df = df[1:]
-#         df.columns = new_header
-#         client_names = df["Client ID"].to_list()
-#         # LOOP THROUGH FACILITY LIST COLUMN TO REMOVE SEMI MONTHLY'S
-#         for idx, val in enumerate(client_names, start=1):
-#             val = str(val)
-#             if val is None:
-#                 break
-#             for j in sm_list:
-#                 if j.lower() in val.lower():
-#                     df = df.drop(idx)
-#                     print("drop " + val)
-#                     break
-#         new_name = r"C:\Users\tyler.anderson\Documents\Finance\210308 - 2020 Tax Credit - Payroll\PAYROLL ALLOCATION REPORTS\ALL REPORTS" + "\\" + filename + " - count " + str(counter) + ".csv"
-#         df.to_csv(new_name, index=False, header=True)
-#         xw.apps.active.quit()
-#         counter -= 1
-#         print(counter)
-
-
-def getFileList():
+def copyPayrollRawData():
     """Walks through all files in the path and makes a list of them"""
-    folder = r"C:\Users\tyler.anderson\Documents\Finance\210308 - 2020 Tax Credit - Payroll\PAYROLL ALLOCATION REPORTS\BW2"
-    file_list = []
-    counter = 0
-    for dirpath, dirnames, filenames in os.walk(folder):
-        for filename in [f for f in filenames if f.endswith(".csv")]:
-            file = os.path.join(dirpath, filename)
-            if 'payroll allocation' in file:
-                file_list.append(file)
-                print(file)
-                counter += 1
-    print(counter)
+    summary = r"C:\Users\tyler.anderson\Documents\Finance\210525 - 2021 Q1 ERTC\210712 - 2021 Q1 ERTC Summary.xlsx"
+    folder = glob.glob(r"C:\Users\tyler.anderson\Documents\Finance\210525 - 2021 Q1 ERTC\FINISHED TEMPLATES\*")
+    sum_df = pd.DataFrame(index="Client ID")
+    for i, file in enumerate(folder):
+        df = pd.read_excel(file, sheet_name="CAREs Act Data Payroll Template", index_col="Client I")
+        # last_row = len(df)
+        # wb = xw.Book(file)
+        # sht = wb.sheets('CAREs Act Data Payroll Template')
+        # rg = sht.range("A2:AY" + str(last_row))
+        # vals = rg.value
+        sum_df = sum_df.append(df)
+        # xw.apps.active.quit()
+        print(f"File {str(i)}")
+    sum_df.to_csv()
 
 
 if __name__ == '__main__':
-    # getFileList()
+    copyPayrollRawData()
     print("Done")

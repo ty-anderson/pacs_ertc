@@ -21,14 +21,14 @@ def getPayrollAllocationFiles():
 
 def copyIntoExcelTemplate():
     file_list = glob.glob(r"C:\Users\tyler.anderson\Documents\Finance\210712 - 2021 Q2 ERTC\PAYROLL ALLOCATION REPORTS\*.xlsx")
-    counter = 121
+    counter = 122
     for file in file_list:
         filepath, filename = os.path.split(file)
         daterange = filename.split("(")
         daterange = daterange[1].split(")")
         wb = xw.Book(file, update_links=False, read_only=True)
         payroll_sht = wb.sheets[0]
-        payroll_data = payroll_sht.range('A4:PX15000').value # NEW PAYROLL FILE HEADERS ARE ON ROW 4
+        payroll_data = payroll_sht.range('A6:PX15000').value
         df = pd.DataFrame(payroll_data)
         new_header = df.iloc[0]
         df = df[1:]

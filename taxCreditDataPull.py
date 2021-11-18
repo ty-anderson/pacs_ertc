@@ -11,7 +11,7 @@ import glob
 def getPayrollAllocationFiles():
     """Walks through all files in the path and copys to the end path (step 1)"""
     lookfolder = r"P:\PACS\Finance\Labor Data\2021"
-    endfolder = r"C:\Users\tyler.anderson\Documents\Finance\210712 - 2021 Q2 ERTC\PAYROLL ALLOCATION REPORTS"
+    endfolder = r"C:\Users\tyler.anderson\Documents\Finance\211118 - 2021 Q3 ERTC\PAYROLL ALLOCATION REPORTS"
     for dirpath, dirnames, filenames in os.walk(lookfolder):
         for filename in [f for f in filenames if f.endswith(".xlsx")]:
             file = os.path.join(dirpath, filename)
@@ -20,7 +20,7 @@ def getPayrollAllocationFiles():
 
 
 def copyIntoExcelTemplate():
-    file_list = glob.glob(r"C:\Users\tyler.anderson\Documents\Finance\210712 - 2021 Q2 ERTC\PAYROLL ALLOCATION REPORTS\*.xlsx")
+    file_list = glob.glob(r"C:\Users\tyler.anderson\Documents\Finance\211118 - 2021 Q3 ERTC\PAYROLL ALLOCATION REPORTS\*.xlsx")
     counter = 122
     for file in file_list:
         filepath, filename = os.path.split(file)
@@ -37,13 +37,13 @@ def copyIntoExcelTemplate():
         for idx, val in enumerate(client_names):  # GET LAST ROW NUMBER TO AUTOFILL TO
             if val is None:
                 break
-        temp_wb = xw.Book(r"C:\Users\tyler.anderson\Documents\Finance\210712 - 2021 Q2 ERTC\210311 PACS Template.xlsx", update_links=True, read_only=False)
+        temp_wb = xw.Book(r"C:\Users\tyler.anderson\Documents\Finance\211118 - 2021 Q3 ERTC\210311 - 2021 Q3 PACS Template.xlsx", update_links=True, read_only=False)
         ws = temp_wb.sheets['Payroll Allocation Report v3']
         ws.range("A2:PX15001").clear_contents()
         ws.range("A2:PX15001").value = payroll_data
         main_ws = temp_wb.sheets['CAREs Act Data Payroll Template']
         main_ws.range('A2:AY2').api.AutoFill(main_ws.range("A2:AY" + str(idx + 1)).api, AutoFillType.xlFillDefault)
-        new_name = r"C:\Users\tyler.anderson\Documents\Finance\210712 - 2021 Q2 ERTC\FINISHED TEMPLATES" + "\\Payroll " + daterange[0] + " (" + str(counter) + ").xlsx"
+        new_name = r"C:\Users\tyler.anderson\Documents\Finance\211118 - 2021 Q3 ERTC\FINISHED TEMPLATES" + "\\Payroll " + daterange[0] + " (" + str(counter) + ").xlsx"
         temp_wb.save(new_name)
         xw.apps.active.quit()
         counter += 1
